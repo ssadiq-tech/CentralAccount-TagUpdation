@@ -39,15 +39,15 @@ central_response = central_client.tag_resources(
 
 print("Central Account tagging response:", central_response)
 
-# Tag over each account and perform actions
+# Loop over each account and perform actions
 for account_id in account_ids:
     assumed_session = assume_role(account_id, role_name)
     client = assumed_session.client('resourcegroupstaggingapi')
 
-    # Example: Upfate the tags in the assumed account
+# Example: Upfate the tags in the assumed account
     response = client.tag_resources(
     ResourceARNList=Member_resource_arn,
     Tags=tags_to_update
     )
 
-print("Tagging response:", response)
+print("Member Account tagging response:", response)
