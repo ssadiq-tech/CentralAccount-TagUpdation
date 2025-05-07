@@ -1,6 +1,5 @@
 import boto3
-from resource_arns import central_resource_arn, Member_resource_arn
-from accountids import account_ids, role_name
+from config import central_resource_arn, Member_resource_arn, role_name, account_ids
 
 # Tags to add/patch
 tags_to_update = {
