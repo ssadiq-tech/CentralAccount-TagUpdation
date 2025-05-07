@@ -1,7 +1,7 @@
 import boto3
 from config import central_resource_arn, Member_resource_arn, role_name, account_ids
 
-# Tags to add/patch
+# Tags to add
 tags_to_update = {
     'Environment': 'Production',
     'Owner': 'DevOps Team',
@@ -22,14 +22,14 @@ def assume_role(account_id, role_name):
 
     credentials = response['Credentials']
 
-    # Return a new boto3 session with assumed role credentials
+# Return a new boto3 session with assumed role credentials
     return boto3.Session(
         aws_access_key_id=credentials['AccessKeyId'],
         aws_secret_access_key=credentials['SecretAccessKey'],
         aws_session_token=credentials['SessionToken']
     )
 
-# 1️⃣ Tagging resources in Central Account
+# Tagging resources in Central Account
 central_client = session.client('resourcegroupstaggingapi')
 
 central_response = central_client.tag_resources(
@@ -37,9 +37,9 @@ central_response = central_client.tag_resources(
     Tags=tags_to_update
 )
 
-print("✅ Central Account tagging response:", central_response)
+print("Central Account tagging response:", central_response)
 
-# Loop over each account and perform actions
+# Tag over each account and perform actions
 for account_id in account_ids:
     assumed_session = assume_role(account_id, role_name)
     client = assumed_session.client('resourcegroupstaggingapi')
